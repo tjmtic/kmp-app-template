@@ -45,7 +45,7 @@ a composite build tolerates one AGP), Kotlin 2.4.10, Compose Multiplatform 1.11.
 ## Checks
 
 ```bash
-./gradlew ktfmtCheck :detekt-rules:test detekt :shared:jvmTest :composeApp:assembleDebug
+./gradlew ktfmtCheck :detekt-rules:test detekt :shared:jvmTest :composeApp:testDebugUnitTest :composeApp:assembleDebug
 ```
 
 ```bash

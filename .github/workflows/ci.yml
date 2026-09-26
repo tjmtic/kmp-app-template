@@ -27,6 +27,8 @@ jobs:
         run: ./gradlew :detekt-rules:test detekt --console=plain
       - name: Shared tests (JVM)
         run: ./gradlew :shared:jvmTest --console=plain
+      - name: App tests (Android unit)
+        run: ./gradlew :composeApp:testDebugUnitTest --console=plain
       - name: Android build
         run: ./gradlew :composeApp:assembleDebug --console=plain
       - name: iOS compile check (klib cross-compilation)

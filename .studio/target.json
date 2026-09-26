@@ -17,9 +17,9 @@
       "id": "app",
       "label": "App UI",
       "moduleDir": "composeApp/src",
-      "gradleTest": ":composeApp:compileDebugKotlinAndroid",
+      "gradleTest": ":composeApp:testDebugUnitTest",
       "areas": ["ui", "screen", "compose", "navigation"]
     }
   ],
-  "verify": ["./gradlew", "ktfmtCheck", ":detekt-rules:test", "detekt", ":shared:jvmTest", ":composeApp:assembleDebug"]
+  "verify": ["./gradlew", "ktfmtCheck", ":detekt-rules:test", "detekt", ":shared:jvmTest", ":composeApp:testDebugUnitTest", ":composeApp:assembleDebug"]
 }
