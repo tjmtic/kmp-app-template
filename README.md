@@ -24,6 +24,12 @@ copied from a template, so `protect-branches.sh` sets it: both CI lanes on `main
 lane on `develop`, no required reviews (the studio merges on green CI; the human gate is the
 `develop` → `main` PR).
 
+The studio merges only where the app opts in: set `"autoMerge": true` in `.studio/target.json`
+(the template ships `false`), and the studio needs `EDIT_LOOP_AUTO_MERGE=1`. It then squash-merges
+its own PR into `develop` once every CI check is green, its reviewer step accepted, and no review
+requests changes. It never merges into `main`: a release is you merging the `develop` → `main`
+promotion PR, and the release train departs from `main`.
+
 ## What is in it
 
 | Path | What |

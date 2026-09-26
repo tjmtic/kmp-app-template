@@ -4,6 +4,7 @@
   "project": { "repo": "tjmtic/kmp-app-template" },
   "releaseBranch": "main",
   "mergeBranch": "develop",
+  "autoMerge": false,
   "appModule": "composeApp",
   "sections": [
     {
