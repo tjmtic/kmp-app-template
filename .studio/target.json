@@ -22,5 +22,5 @@
       "areas": ["ui", "screen", "compose", "navigation"]
     }
   ],
-  "verify": ["./gradlew", "ktfmtCheck", ":detekt-rules:test", "detekt", ":shared:jvmTest", ":composeApp:testDebugUnitTest", ":composeApp:assembleDebug"]
+  "verify": ["./gradlew", "ktfmtCheck", ":detekt-rules:test", "detekt", ":shared:jvmTest", ":composeApp:testDebugUnitTest", ":composeApp:assembleDebug", ":composeApp:compileKotlinIosSimulatorArm64", "-Pkotlin.native.enableKlibsCrossCompilation=true"]
 }
