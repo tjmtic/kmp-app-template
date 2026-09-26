@@ -15,7 +15,14 @@ gh repo create owner/my-app --template tjmtic/kmp-app-template --public --clone
 cd my-app && scripts/rename.sh "My App" com.example.myapp owner/my-app && git commit -am "Rename from template" && git push
 ```
 
-Create a `develop` branch for the studio's merges; `main` is the release branch.
+```bash
+git push origin main:develop && scripts/protect-branches.sh owner/my-app
+```
+
+`develop` is where the studio merges; `main` is the release branch. Branch protection is not
+copied from a template, so `protect-branches.sh` sets it: both CI lanes on `main`, the Linux
+lane on `develop`, no required reviews (the studio merges on green CI; the human gate is the
+`develop` → `main` PR).
 
 ## What is in it
 
@@ -29,6 +36,7 @@ Create a `develop` branch for the studio's merges; `main` is the release branch.
 | `.studio/target.json` | How the studio works on this repo: sections, test tasks, merge branch (`develop`), release branch (`main`) |
 | `.claude/` | The kmp-agentic-sdlc workflow set, at the commit in `.claude/.workflow-set-sha` |
 | `scripts/rename.sh` | Turns the template into your app |
+| `scripts/protect-branches.sh` | Branch protection for the new repo (templates do not carry it) |
 
 Versions live only in `gradle/libs.versions.toml`: AGP 8.13.2 (in lockstep with the fleet —
 a composite build tolerates one AGP), Kotlin 2.4.10, Compose Multiplatform 1.11.1. No
