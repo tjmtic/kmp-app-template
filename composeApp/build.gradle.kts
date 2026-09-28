@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -36,6 +37,15 @@ kotlin {
 // Every user-facing string comes from Compose Resources (composeResources/values/strings.xml).
 compose.resources { packageOfResClass = "com.abyxcz.template.resources" }
 
+// Release signing from keystore.properties in the repo root (gitignored; see
+// keystore.properties.template). Without it a release build is unsigned, which is fine locally;
+// the studio's release train refuses to upload an unsigned bundle.
+val keystorePropsFile = rootProject.file("keystore.properties")
+val keystoreProps =
+    Properties().apply {
+        if (keystorePropsFile.exists()) keystorePropsFile.inputStream().use { load(it) }
+    }
+
 android {
     namespace = "com.abyxcz.template"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -46,7 +56,22 @@ android {
         versionCode = 1
         versionName = "0.1.0"
     }
-    buildTypes { release { isMinifyEnabled = false } }
+    signingConfigs {
+        if (keystorePropsFile.exists()) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.findByName("release")
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
